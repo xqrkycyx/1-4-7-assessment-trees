@@ -65,7 +65,25 @@ class StarshipEnterprise {
 
   listOfficersByExperience(officerNames = []) {
     // your solution here
-    return officerNames;
+
+    if (!this.officerId) {
+      return officerNames; // Base case: if the current officer is null, return the accumulated officer names
+    }
+
+    // Recursively traverse the right subtree first (higher experience)
+    if (this.rightReport) {
+      this.rightReport.listOfficersByExperience(officerNames);
+    }
+
+    // Add the current officer's name to the array
+    officerNames.push(this.officerName);
+
+    // Recursively traverse the left subtree (lower experience)
+    if (this.leftReport) {
+      this.leftReport.listOfficersByExperience(officerNames);
+    }
+
+    return officerNames; // Return the array of officer names in decreasing order of experience
   }
 
   listOfficersByRank(tree, rankedOfficers = {}) {
