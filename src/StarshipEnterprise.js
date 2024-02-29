@@ -11,6 +11,34 @@ class StarshipEnterprise {
 
   assignOfficer(officerId, officerName) {
     // your solution here
+
+    const newOfficer = new StarshipEnterprise(officerId, officerName);
+
+    if (!this.officerId) {
+      // If the tree is empty, the new officer becomes the captain
+      this.officerId = officerId;
+      this.officerName = officerName;
+      return;
+    }
+
+    let current = this;
+    let parent;
+
+    while (current) {
+      parent = current;
+      if (officerId < current.officerId) {
+        current = current.leftReport;
+      } else {
+        current = current.rightReport;
+      }
+    }
+
+    // Assign the new officer based on whether they are less or more experienced than the current officer
+    if (officerId < parent.officerId) {
+      parent.leftReport = newOfficer;
+    } else {
+      parent.rightReport = newOfficer;
+    }
   }
 
   findOfficersWithNoDirectReports(values = []) {
