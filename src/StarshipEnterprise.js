@@ -86,9 +86,24 @@ class StarshipEnterprise {
     return officerNames; // Return the array of officer names in decreasing order of experience
   }
 
-  listOfficersByRank(tree, rankedOfficers = {}) {
-    // your solution here
-    return rankedOfficers;
+  listOfficersByRank(tree, rankedOfficers = {}, rank = 1) {
+    if (!tree) {
+      return rankedOfficers; // Base case: if the current tree is null, return the accumulated ranked officers
+    }
+
+    // Recursive call for left subtree
+    this.listOfficersByRank(tree.leftReport, rankedOfficers, rank + 1);
+
+    // Add the officer to the corresponding rank array based on the rank
+    if (!rankedOfficers[rank]) {
+      rankedOfficers[rank] = [];
+    }
+    rankedOfficers[rank].push(tree.officerName);
+
+    // Recursive call for right subtree
+    this.listOfficersByRank(tree.rightReport, rankedOfficers, rank + 1);
+
+    return rankedOfficers; // Return the object containing officers organized by rank
   }
 }
 
