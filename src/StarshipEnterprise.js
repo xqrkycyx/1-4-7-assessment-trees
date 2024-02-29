@@ -43,7 +43,24 @@ class StarshipEnterprise {
 
   findOfficersWithNoDirectReports(values = []) {
     // your solution here
-    return values;
+
+    if (!this.officerId) {
+      return values; // Base case: if the current officer is null, return the accumulated values
+    }
+
+    if (!this.leftReport && !this.rightReport) {
+      values.push(this.officerName); // If the current officer has no direct reports, add their name to the array
+    }
+
+    // Recursively check left and right subtrees
+    if (this.leftReport) {
+      this.leftReport.findOfficersWithNoDirectReports(values);
+    }
+    if (this.rightReport) {
+      this.rightReport.findOfficersWithNoDirectReports(values);
+    }
+
+    return values; // Return the array of officers with no direct reports
   }
 
   listOfficersByExperience(officerNames = []) {
